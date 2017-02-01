@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello Trevor!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-    <p>Suck my ass<p/>
-  </body>
 
-  <script>
-    // You can also require other files to run in this process
-    require('./renderer.js')
-  </script>
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World!</title>
+</head>
+
+<body>
+  <h1>Hello Trevor!</h1>
+  <button id="openFile" onclick="openFile();">Open</button>
+
+<br />
+
+<textarea id="editor" style="width: 400px; height: 300px;"></textarea>
+
+</body>
+
+
+
+<script>
+  // You can also require other files to run in this process
+  require('./renderer.js')
+
+  const {dialog} = require('electron').remote
+
+  function openFile() {    
+    dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] })
+  }
+
+
+</script>
+
+
 </html>
