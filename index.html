@@ -4,20 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <title>Hello World!</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
-  <h1>Hello Trevor!</h1>
-  <button id="openFile" onclick="openFile();">Open</button>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Bank Bank Equals Bank</h1>
+        <button class="btn btn-primary" id="openFile" onclick="openFile();">Open</button>
+        <hr />
+      </div>
+    </div>
 
-  <br />
-
-  <textarea id="editor" style="width: 400px; height: 300px;"></textarea>
-
+    <textarea class="form-control" id="editor" style="width: 400px; height: 300px;"></textarea>
+  </div>
 </body>
 
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
   // You can also require other files to run in this process
   require('./renderer.js')
@@ -44,6 +49,7 @@
       }
       // Change how to handle the file content
       console.log("The file content is : " + data);
+
       document.getElementById("editor").innerHTML = data;
     });
   }
