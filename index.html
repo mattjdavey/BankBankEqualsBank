@@ -54,6 +54,14 @@
     // You can also require other files to run in this process
     require('./renderer.js')
 
+    $("#ledgerBalance").html(localStorage.getItem("ledgerBalance"));
+    $("#availableBalance").html(localStorage.getItem("availableBalance"));
+
+    for (var i = 0; i < localStorage.counter; i++) {
+      $("#transactions-body").append("<tr><td>" + localStorage.getItem("datePosted_" +  i) +   "</td><td>" +   localStorage.getItem("amount_" +  i) +   "</td><td>" +   localStorage.getItem("type_" +  i) +   "</td><td>" +    localStorage.getItem("name_" +  i) +    "</td><td>" +    localStorage.getItem("datePosted_" +  i) +    "</td></tr>");
+
+    }
+
     const {
         dialog
     } = require('electron').remote
@@ -71,7 +79,10 @@
     }
 
     function readFile(filepath) {
+      $("#transactions-body").empty();
+      var counter = 0;
         fs.readFile(filepath, 'utf-8', function(err, data) {
+
             if (err) {
                 alert("An error ocurred reading the file :" + err.message);
                 return;
@@ -82,6 +93,9 @@
             $("#ledgerBalance").html($("LEDGERBAL").find("BALAMT")[0].childNodes[0].nodeValue);
             $("#availableBalance").html($("AVAILBAL").find("BALAMT")[0].childNodes[0].nodeValue);
 
+            localStorage.setItem("ledgerBalance", $("LEDGERBAL").find("BALAMT")[0].childNodes[0].nodeValue);
+            localStorage.setItem("availableBalance", $("AVAILBAL").find("BALAMT")[0].childNodes[0].nodeValue);
+
             $("STMTTRN").each(function() {
                 var date = $(this).find("DTPOSTED")[0].childNodes[0].nodeValue;
                 var amount = $(this).find("TRNAMT")[0].childNodes[0].nodeValue;
@@ -89,13 +103,21 @@
                 var name = $(this).find("NAME")[0].childNodes[0].nodeValue;
                 var memo = $(this).find("MEMO")[0].childNodes[0].nodeValue;
 
+                localStorage.setItem("datePosted_" + counter, moment(date.substring(0,8)).format('ll'));
+                localStorage.setItem("amount_" + counter, amount);
+                localStorage.setItem("type_" + counter, type);
+                localStorage.setItem("name_" + counter, name);
+                localStorage.setItem("memo_" + counter, memo);
+
                 $("#transactions-body").append("<tr><td>" + moment(date.substring(0,8)).format('ll') +   "</td><td>" +   amount +   "</td><td>" +   type +   "</td><td>" +    name +    "</td><td>" +    memo +    "</td></tr>");
 
+                counter++;
 
 
-                console.log();
+
             });
 
+            localStorage.setItem("counter", counter);
 
 
 
